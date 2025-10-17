@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="Prolink CV | Free Resume Builder Wizard Kenya">
+  <meta name="description" content="Create professional, ATS-ready resumes in minutes using Prolink CV – Kenya’s trusted AI-powered Resume Builder.">
+  <title>Prolink CV - Resume Builder Wizard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles/main.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Prolink CV",
+    "url": "https://prolinkcv.github.io",
+    "logo": "/assets/logo.png",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+254706625195",
+      "contactType": "Customer Service",
+      "areaServed": "KE"
+    }
+  }
+  </script>
+</head>
+<body class="bg-white font-serif text-black">
+  <header class="bg-white shadow-md p-4 flex justify-between items-center">
+    <img src="assets/logo.png" alt="Prolink CV Logo" class="h-10">
+    <div id="auth-section">
+      <button id="login-btn" class="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
+      <button id="signup-btn" class="bg-green-500 text-white px-4 py-2 rounded ml-2">Sign Up</button>
+      <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded hidden">Logout</button>
+      <span id="user-email" class="ml-2 hidden"></span>
+    </div>
+  </header>
+
+  <main class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold text-center mb-8 font-sans">Prolink CV Resume Builder Wizard</h1>
+
+    <div id="wizard" class="bg-white rounded-lg shadow-md p-6">
+      <!-- Step 1: Contact Details -->
+      <section id="step-1" class="step">
+        <h2 class="text-2xl font-bold mb-4">Step 1: Contact Details</h2>
+        <form id="contact-form">
+          <input type="file" id="photo" accept="image/*" class="mb-2">
+          <input type="text" id="first-name" placeholder="First Name" class="border p-2 mb-2 w-full rounded">
+          <input type="text" id="surname" placeholder="Surname" class="border p-2 mb-2 w-full rounded">
+          <input type="text" id="professional-title" placeholder="Professional Title" class="border p-2 mb-2 w-full rounded">
+          <input type="tel" id="phone" placeholder="Phone Number" class="border p-2 mb-2 w-full rounded">
+          <input type="email" id="email" placeholder="Email Address" class="border p-2 mb-2 w-full rounded">
+          <input type="text" id="nationality" placeholder="Nationality" class="border p-2 mb-2 w-full rounded">
+          <input type="date" id="dob" class="border p-2 mb-2 w-full rounded">
+          <div class="flex justify-end mt-4">
+            <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" onclick="saveAndContinue(1)">Save & Continue</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Step 2: Work Experience -->
+      <section id="step-2" class="step hidden">
+        <h2 class="text-2xl font-bold mb-4">Step 2: Work Experience</h2>
+        <div id="work-experiences"></div>
+        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="addWorkExperience()">Add Job</button>
+        <div class="flex justify-between mt-4">
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="back(2)">Back</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="saveAndContinue(2)">Save & Continue</button>
+        </div>
+      </section>
+
+      <!-- Similar sections for Step 3-8... (abbreviated for brevity, implement similarly) -->
+      <!-- Step 3: Education -->
+      <section id="step-3" class="step hidden">
+        <h2 class="text-2xl font-bold mb-4">Step 3: Education</h2>
+        <div id="educations"></div>
+        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="addEducation()">Add Education</button>
+        <div class="flex justify-between mt-4">
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="back(3)">Back</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="saveAndContinue(3)">Save & Continue</button>
+        </div>
+      </section>
+
+      <!-- Step 4: Certifications -->
+      <section id="step-4" class="step hidden">
+        <h2 class="text-2xl font-bold mb-4">Step 4: Certifications</h2>
+        <div id="certifications"></div>
+        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="addCertification()">Add Certification</button>
+        <div class="flex justify-between mt-4">
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="back(4)">Back</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" onclick="skip(4)">Skip</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="saveAndContinue(4)">Save & Continue</button>
+        </div>
+      </section>
+
+      <!-- Step 5: Skills -->
+      <section id="step-5" class="step hidden">
+        <h2 class="text-2xl font-bold mb-4">Step 5: Skills</h2>
+        <div id="skills" class="flex flex-wrap"></div>
+        <input type="text" id="new-skill" placeholder="Add Skill" class="border p-2 mb-2 w-full rounded">
+        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="addSkill()">Add</button>
+        <div class="flex justify-between mt-4">
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="back(5)">Back</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" onclick="skip(5)">Skip</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="saveAndContinue(5)">Save & Continue</button>
+        </div>
+      </section>
+
+      <!-- Step 6: Professional Summary -->
+      <section id="step-6" class="step hidden">
+        <h2 class="text-2xl font-bold mb-4">Step 6: Professional Summary</h2>
+        <textarea id="summary" class="border p-2 mb-2 w-full rounded" rows="5"></textarea>
+        <button type="button" class="bg-purple-500 text-white px-4 py-2 rounded" onclick="generateSummary()">Generate AI Suggestion</button>
+        <div class="flex justify-between mt-4">
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="back(6)">Back</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" onclick="skip(6)">Skip</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="saveAndContinue(6)">Save & Continue</button>
+        </div>
+      </section>
+
+      <!-- Step 7: References -->
+      <section id="step-7" class="step hidden">
+        <h2 class="text-2xl font-bold mb-4">Step 7: References</h2>
+        <select id="references-option" class="border p-2 mb-2 w-full rounded">
+          <option value="no">No</option>
+          <option value="upon-request">Upon Request</option>
+          <option value="yes">Yes</option>
+        </select>
+        <div id="references-form" class="hidden">
+          <div id="references"></div>
+          <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="addReference()">Add Reference</button>
+        </div>
+        <div class="flex justify-between mt-4">
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="back(7)">Back</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" onclick="skip(7)">Skip</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="saveAndContinue(7)">Save & Continue</button>
+        </div>
+      </section>
+
+      <!-- Step 8: Additional Sections -->
+      <section id="step-8" class="step hidden">
+        <h2 class="text-2xl font-bold mb-4">Step 8: Additional Sections</h2>
+        <label><input type="checkbox" id="languages"> Languages</label><br>
+        <label><input type="checkbox" id="projects"> Research Projects</label><br>
+        <label><input type="checkbox" id="awards"> Awards</label><br>
+        <label><input type="checkbox" id="declaration"> Declaration</label><br>
+        <label><input type="checkbox" id="hobbies"> Hobbies</label><br>
+        <label><input type="checkbox" id="custom"> Custom Section</label><br>
+        <!-- Dynamic forms for each checked would appear here, but for brevity, assume simple text areas -->
+        <div id="additional-forms"></div>
+        <div class="flex justify-between mt-4">
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="back(8)">Back</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" onclick="skip(8)">Skip This Section</button>
+          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded" onclick="saveAndContinue(8)">Save & Continue</button>
+        </div>
+      </section>
+
+      <!-- Step 9: Finalize -->
+      <section id="step-9" class="step hidden">
+        <h2 class="text-2xl font-bold mb-4">Step 9: Finalize Your Resume</h2>
+        <div id="resume-preview" class="border p-4 mb-4"></div>
+        <select id="template-style" class="border p-2 mb-2 w-full rounded">
+          <option value="1">Template 1 (Classic)</option>
+          <option value="2">Template 2 (Modern)</option>
+          <option value="3">Template 3 (Creative)</option>
+          <option value="4">Template 4 (Professional)</option>
+          <option value="5">Template 5 (Simple)</option>
+          <option value="6">Template 6 (Executive)</option>
+        </select>
+        <select id="color-theme" class="border p-2 mb-2 w-full rounded">
+          <option value="black">Black</option>
+          <option value="blue">Blue</option>
+          <!-- Add more -->
+        </select>
+        <button type="button" class="bg-blue-500 text-white px-4 py-2 rounded" onclick="editCV()">Edit My CV</button>
+        <button type="button" class="bg-green-500 text-white px-4 py-2 rounded ml-2" onclick="payAndDownload()">Pay Ksh 119 & Download</button>
+        <button id="download-btn" type="button" class="bg-green-500 text-white px-4 py-2 rounded ml-2 hidden" onclick="downloadPDF()">Download PDF</button>
+      </section>
+    </div>
+  </main>
+
+  <footer class="bg-white shadow-md p-4 text-center mt-8">
+    © 2025 Prolink CV. All Rights Reserved.<br>
+    Developed by Lewis Muli Keli | Upper Hill, Nairobi | +254706625195
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="scripts/supabase.js"></script>
+  <script src="scripts/payments.js"></script>
+  <script src="scripts/resume-wizard.js"></script>
+</body>
+</html>
